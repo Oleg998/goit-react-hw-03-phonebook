@@ -9,13 +9,30 @@ class MyPhoneBook extends Component {
     contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    const contacts = JSON.parse(localStorage.getItem('myPhoneBook'));
+    if (contacts?.length) {
+      this.setState({
+        contacts,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+    if (prevState.contacts.length !== contacts.length) {
+      localStorage.setItem('myPhoneBook', JSON.stringify(contacts));
+    }
+  }
+
   isDulecate({ name, number }) {
     const { contacts } = this.state;
     const normalazeName = name.toLowerCase();
 
     const dublicate = contacts.find(item => {
       const normalizedCurrentName = item.name.toLowerCase();
-      return normalazeName === normalizedCurrentName ;
+      return normalazeName === normalizedCurrentName;
     });
     return Boolean(dublicate);
   }
@@ -58,6 +75,7 @@ class MyPhoneBook extends Component {
   }
 
   render() {
+    console.log('render');
     const contacts = this.getFilerName();
     const { addForPhenebook, deleteName, handelSearce } = this;
     return (
