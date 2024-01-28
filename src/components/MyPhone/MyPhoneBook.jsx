@@ -75,7 +75,6 @@ class MyPhoneBook extends Component {
   }
 
   render() {
-    console.log('render');
     const contacts = this.getFilerName();
     const { addForPhenebook, deleteName, handelSearce } = this;
     return (
